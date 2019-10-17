@@ -1,0 +1,25 @@
+PulseAudio Basic Configuration:
+sudo nano /etc/pulse/daemon.conf
+
+To re-read the config files: 
+sudo pulseaudio --kill
+sudo pulseaudio --start
+
+Check audio bit depth and sampling rate:
+watch -n 1 cat /proc/asound/card0/pcm0p/sub0/hw_params
+
+FLAC Test:
+find  "./" -type f -iname '*.flac' -print0 | xargs --null flac -V -t
+
+FLAC Compression and Test:
+find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l 32 -p -m -r 0,15, --replay-gain
+
+MP3ReplayGain:
+find  "./" -type f -iname '*.mp3' -print0 | xargs --null mp3gain -T -e -r -k
+-r        apply Track gain automatically
+-k        automatically lower Track gain to not clip audio
+-T        modifies original file instead of writing to temp file
+-e        skip Album analysis
+
+FFmpeg Resampler:
+ffmpeg -i /home/generaleramon/Music/"01 - Long Way Back From Hell.mp3" -filter:a aresample=192000:resampler=soxr -f wv pipe:1 | ffmpeg -i - -b:a 320k /home/generaleramon/Music/soxr.mp3 -y
