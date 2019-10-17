@@ -1,0 +1,9 @@
+[Unit]
+Description = Systemd Service starting the script to mount everything in 'fstab'
+After = network-online.target
+
+[Service]
+ExecStart ="/usr/bin/mount.sh"
+
+[Install]
+WantedBy = network-online.target
