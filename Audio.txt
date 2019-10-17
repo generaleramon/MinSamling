@@ -3,8 +3,9 @@ sudo nano /etc/pulse/daemon.conf
 sudo pulseaudio --kill
 sudo pulseaudio --start
 
-//Check audio bit depth and sampling rate:
+//Check actual audio bit-depth and sampling rate of the output:
 watch -n 1 cat /proc/asound/card0/pcm0p/sub0/hw_params
+watch -n 1 cat /proc/asound/card1/pcm0p/sub0/hw_params
 
 //FLAC Test Only:
 find  "./" -type f -iname '*.flac' -print0 | xargs --null flac -V -t
