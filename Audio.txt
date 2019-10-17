@@ -9,10 +9,10 @@ watch -n 1 cat /proc/asound/card0/pcm0p/sub0/hw_params
 //FLAC Test Only:
 find  "./" -type f -iname '*.flac' -print0 | xargs --null flac -V -t
 
-//FLAC Compression and Test:
+//FLAC Max Compression and Test:
 find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l 32 -p -m -r 0,15, --replay-gain
 
-//FLAC Compression and Test Beta:
+//FLAC Max Compression and Test - Beta:
 find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l 32 -p -m -r 0,15, --replay-gain -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A hamming -A hann -A tukey -A kaiser_bessel -A nuttall -A rectangle -A triangle -A welch
 
 //MP3 ReplayGain with 'mp3gain':
