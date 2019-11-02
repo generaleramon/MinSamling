@@ -16,6 +16,9 @@ find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l
 //FLAC Max Compression and Test - Beta:
 find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l 32 -p -m -r 0,15, --replay-gain -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A hamming -A hann -A tukey -A kaiser_bessel -A nuttall -A rectangle -A triangle -A welch
 
+//Wavpack Max Compression
+for i in *.flac; do ffmpeg -i "$i" -c:a libwavpack -compression_level 8 "${i%.*}.wv"; done
+
 //MP3 ReplayGain with 'mp3gain':
 find  "./" -type f -iname '*.mp3' -print0 | xargs --null mp3gain -T -e -r -k
 -r        apply Track gain automatically
