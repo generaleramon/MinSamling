@@ -1,0 +1,9 @@
+# /etc/exports
+/media/4GB    192.168.0.0/24(rw,no_root_squash,nohide,insecure,async,no_subtree_check)
+/media/raid5  192.168.0.0/24(rw,no_root_squash,nohide,insecure,async,no_subtree_check)
+/home/pi      192.168.0.0/24(rw,no_root_squash,nohide,insecure,async,no_subtree_check)
+
+# sudo exportfs -ra
+sudo update-rc.d rpcbind enable && sudo update-rc.d nfs-common enable
+sudo service rpcbind restart
+sudo service nfs-kernel-server restart
