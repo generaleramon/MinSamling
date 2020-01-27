@@ -1,3 +1,5 @@
+sudo apt-get install nfs-kernel-server -y
+
 # /etc/exports
 /media/4GB    192.168.0.0/24(rw,no_root_squash,nohide,insecure,async,no_subtree_check)
 /media/raid5  192.168.0.0/24(rw,no_root_squash,nohide,insecure,async,no_subtree_check)
