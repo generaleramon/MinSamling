@@ -1,0 +1,46 @@
+##FAT filesystem Check+Repair
+sudo dosfsck -w -r -l -a -v -t <partition>
+
+##Read startup log
+sudo journalctl | grep <string>
+
+##Read default Java Flags
+java -XX:+UnlockDiagnosticVMOptions -XX:+PrintFlagsFinal -version
+
+##Set Initramfs Compression
+sudo nano /etc/mkinitcpio.conf
+
+##Force uninstall a program on Arch/Manjaro
+sudo pacman -Rdd <program>
+
+##GCC Defaults
+gcc -march=native -mtune=native -v -Q --help=target
+
+##Read available compression algorithms
+cat /sys/block/zram0/comp_algorithm
+
+##Set compiler defaults
+sudo nano /etc/makepkg.conf
+
+##NFS
+sudo mount 192.168.0.31:/media/HDD /mnt/NFS
+sudo mount 192.168.0.31:/media/HDD2 /mnt/NFS2
+sudo mount 192.168.0.200:/mnt/HD/HD_a2 /mnt/NAS
+
+##Ram Benchmark
+sysbench --test=memory --num-threads=4 --memory-access-mode=rnd --memory-total-size=3000M run
+
+##Compiler Flags
+#RPI3B+
+CFLAGS="-Ofast -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=crypto-neon-fp-armv8 -funsafe-math-optimizations -pipe" CXXFLAGS="-Ofast -mcpu=cortex-a53 -mfloat-abi=hard -mfpu=crypto-neon-fp-armv8 -funsafe-math-optimizations -pipe" make -j4
+#RPI4
+-flto -flto-compression-level=9 -O3 -march=native -mtune=native -pipe
+#E1-2500
+-flto -flto-compression-level=9 -O3 -march=btver2 -mtune=btver2 -pipe
+
+##FFmpeg Flags
+sudo ./configure --cpu=btver2 --enable-lto --enable-gpl --enable-version3 --enable-nonfree --enable-libopus --enable-libvorbis --enable-libwavpack --enable-libopenh264 --enable-libdav1d --enable-libvpx --enable-opengl --enable-vaapi --enable-vdpau --enable-avresample --disable-mbedtls --disable-openssl --disable-libtls --disable-libsrt --disable-libsmbclient --disable-libopencv --optflags="-flto -flto-compression-level=9 -O3 -march=btver2 -mtune=btver2 -pipe"
+sudo ./configure --cpu=cortex-a53 --enable-nonfree --enable-mmal --enable-omx-rpi --enable-libopus --enable-libvorbis --enable-libwavpack
+
+export CFLAGS="-flto -flto-compression-level=9 -O3 -march=btver2 -mtune=btver2 -pipe"
+export CXXFLAGS="-flto -flto-compression-level=9 -O3 -march=btver2 -mtune=btver2 -pipe"
