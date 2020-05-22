@@ -14,21 +14,26 @@ find  "./" -type f -iname '*.flac' -print0 | xargs --null flac -V -t
 find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l 32 -p -m -r 0,15, --replay-gain
 
 //FLAC Max Compression and Test - Beta:
-find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -8 -l 32 -p -m -r 0,15, --replay-gain -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A hamming -A hann -A tukey -A kaiser_bessel -A nuttall -A rectangle -A triangle -A welch
+find  "./" -type f -iname '*.flac' -print0 | xargs --null flac --lax -f -V -l 32 -p -m -r 0,15, --replay-gain -A tukey -A partial_tukey -A punchout_tukey -A bartlett -A bartlett_hann -A blackman -A blackman_harris_4term_92db -A connes -A flattop -A hamming -A hann -A kaiser_bessel -A nuttall -A rectangle -A triangle -A welch
 
 //FLAC>Wavpack Conversion + Max Compression
 for i in *.flac; do ffmpeg -i "$i" -c:a libwavpack -compression_level 8 "${i%.*}.wv"; done
 
 //Generate Album/Folder MD5
-md5sum *.flac > md5sum.chk
-md5sum -c md5sum.chk
+md5sum *.flac > md5sum.chk && md5sum -c md5sum.chk
+
+//DRLevel
+for i in *.flac ; do ffmpeg -i "$i" -filter:a drmeter -c:a flac -compression_level 0 "dr.flac"; done
 
 //MP3 ReplayGain with 'mp3gain':
-find  "./" -type f -iname '*.mp3' -print0 | xargs --null mp3gain -T -e -r -k
+find  "./" -type f -iname '*.mp3' -print0 | xargs --null mp3gain -T -r -k -e
 -r        apply Track gain automatically
 -k        automatically lower Track gain to not clip audio
 -T        modifies original file instead of writing to temp file
 -e        skip Album analysis
 
+find  "./" -type f -iname '*.mp3' -print0 | xargs --null mp3gain -T -r -k  && md5sum *.mp3 > md5sum.chk && md5sum -c md5sum.chk
+
 //Piped FFmpeg Resampler + Encoding Example:
-ffmpeg -i /home/generaleramon/Music/"01 - Long Way Back From Hell.mp3" -filter:a aresample=192000:resampler=soxr -f wv pipe:1 | ffmpeg -i - -b:a 320k /home/generaleramon/Music/soxr.mp3 -y
+ffmpeg -i /home/generaleramon/Music/"01 - Long Way Back From Hell.mp3" -filter:a aresample=192000:resampler=soxr -f flac pipe:1 | ffmpeg -i - -b:a 320k /home/generaleramon/Music/soxr.mp3 -y
+ffmpeg -i 1.flac -filter:a volume=replaygain=album,aresample=192000:resampler=soxr:precision=28:flags=res -f flac pipe:1 | ffmpeg -i - -map 0:0 -vbr constrained -b:a 128k -frame_duration 60 -f opus test3.opus
