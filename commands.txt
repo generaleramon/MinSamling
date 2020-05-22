@@ -50,8 +50,7 @@ dtparam=sd_overclock=100
 sudo grep clock /sys/kernel/debug/mmc0/ios
 
 ##Vario
+sudo dd status=progress bs=8M if=/dev/mmcblk0 | zstd -19 > /xxx/xxx/raspbian_backup_zstd.img
 sudo nano /etc/init.d/raspi-config
 screen -mS mc java -Xms1G -Xmx1G -XX:+UseConcMarkSweepGC -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+AggressiveOpts -XX:+CompactStrings -jar spigot-1.15.2.jar nogui
 sudo rm airsonic.war && wget https://github.com/airsonic/airsonic/releases/download/v10.6.2/airsonic.war /home/pi/airsonic.war
-export CFLAGS="-flto -flto-compression-level=9 -O3 -march=btver2 -mtune=btver2 -pipe"
-export CXXFLAGS="-flto -flto-compression-level=9 -O3 -march=btver2 -mtune=btver2 -pipe"
