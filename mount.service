@@ -1,9 +1,13 @@
 [Unit]
-Description = Systemd Service starting the script to mount everything in 'fstab'
-After = network-online.target
+Description = Systemd Service starting the script to mount extra partitions
+After = network.target
 
 [Service]
+Type=oneshot
+Restart=on-failure
+User=root
+ExecStartPre=/bin/sleep 30
 ExecStart ="/usr/bin/mount.sh"
 
 [Install]
-WantedBy = network-online.target
+WantedBy = multi-user.target
