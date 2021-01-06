@@ -1,11 +1,9 @@
 #!/bin/bash
 
-#Mount all fstab partition with 10 seconds delay
-sleep 10
+#sudo sysctl -p
 sudo mount -a
+#sudo mount 192.168.1.31:/media/raid5 /home/generaleramon/RAID5
+#sudo mount 192.168.1.31:/media/4GB /home/generaleramon/Documents
+#sudo mount 192.168.1.31:/media/4GB/Pictures /home/generaleramon/Pictures
+#sudo cpupower -c 4-5 frequency-set --governor ondemand
 
-#Undervolt(?) with amdctl
-#sudo amdctl -v 88
-
-#Run (X)f.lux (Upplands Väsby)
-#xflux -l 59.52 -g 17.91 -k 4000
