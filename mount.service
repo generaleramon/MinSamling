@@ -5,9 +5,10 @@ After = network.target
 [Service]
 Type=oneshot
 Restart=on-failure
+RestartSec=5s
 User=root
-ExecStartPre=/bin/sleep 30
-ExecStart ="/usr/bin/mount.sh"
+ExecStartPre="/bin/sleep" 30
+ExecStart="/usr/bin/mount.sh"
 
 [Install]
 WantedBy = multi-user.target
