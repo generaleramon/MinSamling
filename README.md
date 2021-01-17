@@ -1,5 +1,5 @@
 # MinSamling
-
+Random collection of scripts and stuff i need to have with me and want share 
 -----------------------------------------------------------------
 
 # mount.sh - Script
